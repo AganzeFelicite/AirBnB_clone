@@ -23,7 +23,7 @@ class BaseModel:
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
-        return ("[{}] {} {}".format(type(self).__name__, self.id, self.__dict__))
+        return ("[{}] {} {}".format(self.__class__.__name__, self.id, self.__dict__))
 
     def save(self):
         """this is an instance method to update the update_at
