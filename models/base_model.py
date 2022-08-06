@@ -7,7 +7,7 @@ class BaseModel:
     '''this is the basemodel class in this module'''
     def __init__(self, *args, **kwargs):
         """
-        initialisation of instance attributes 
+        initialisation of instance attributes
         """
         if kwargs != {}:
             kwargs["created_at"] = datetime.fromisoformat(kwargs["created_at"])
@@ -17,13 +17,14 @@ class BaseModel:
                     setattr(self, key, val)
         else:
             now = datetime.now(timezone.utc)
-            self.id = str(uuid.uuid4())  # to assign a unique id for each class instance
-            self.created_at = now  # to store the time created
+            self.id = str(uuid.uuid4())  # to assign a unique id
+            self.created_at = now  # to store the time
             self.updated_at = now
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
-        return ("[{}] {} {}".format(type(self).__name__, self.id, self.__dict__))
+        return ("[{}] {} {}".format(
+            self.__class__.__name__, self.id, self.__dict__))
 
     def save(self):
         """this is an instance method to update the update_at
