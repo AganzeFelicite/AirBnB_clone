@@ -16,10 +16,9 @@ class BaseModel:
                 if key != "__class__":
                     setattr(self, key, val)
         else:
-            now = datetime.now(timezone.utc)
             self.id = str(uuid.uuid4())  # to assign a unique id
-            self.created_at = now  # to store the time
-            self.updated_at = now
+            self.created_at = datetime.now(timezone.utc)  # to store the time
+            self.updated_at = datetime.now(timezone.utc)
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
