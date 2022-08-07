@@ -10,11 +10,13 @@ class BaseModel:
         initialisation of instance attributes
         """
         if kwargs != {}:
-            kwargs["created_at"] = datetime.fromisoformat(kwargs["created_at"])
-            kwargs["updated_at"] = datetime.fromisoformat(kwargs["updated_at"])
             for key, val in kwargs.items():
-                if key != "__class__":
-                    setattr(self, key, val)
+                if key == "__class__":
+                    continue
+                if val in ("created_at", "updated_at"):
+                    val = datetime.fromisoformat(val)
+
+                setattr(self, key, val)
         else:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
