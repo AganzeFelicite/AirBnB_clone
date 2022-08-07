@@ -13,20 +13,20 @@ class BaseModel:
             for key, val in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, val)
-                    
-            kwargs["created_at"] = datetime.fromisoformat(kwargs["created_at"])
-            kwargs["updated_at"] = datetime.fromisoformat(kwargs["updated_at"])
-         else:
+
+            kwargs.created_at = datetime.fromisoformat(kwargs["created_at"])
+            kwargs.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+        else:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
-            self.updated_at = datetime.now() 
+            self.updated_at = datetime.now()
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
-        
         return ("[{}] {} {}".format(
-            self.__class__.__name__,str(self.id),str(self.__dict__)))
-
+            self.__class__.__name__,
+            str(self.id),
+            str(self.__dict__)))
 
     def save(self):
         """this is an instance method to update the update_at
