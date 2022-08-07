@@ -22,7 +22,10 @@ class BaseModel:
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
-        return f"[{self.__class__.__name__}] {self.id} {self.__dict__}"
+        
+        return ("[{}] {} {}".format(
+            self.__class__.__name__,str(self.id),str(self.__dict__)))
+
 
     def save(self):
         """this is an instance method to update the update_at
@@ -33,10 +36,10 @@ class BaseModel:
     def to_dict(self):
         """this a function to print a dictionary containing __dic__"""
         r = dict()
-        r["__class__"] = self.__class__.__name__
         for key, val in self.__dict__.items():
             if key in ("created_at", "updated_at"):
                 r[key] = val.isoformat()
             else:
                 r[key] = val
+        r["__class__"] = self.__class__.__name__
         return r
