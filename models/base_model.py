@@ -10,6 +10,7 @@ class BaseModel:
         initialisation of instance attributes
         """
         if kwargs != {}:
+
             for key, val in kwargs.items():
                 if key == "__class__":
                     continue
@@ -25,7 +26,9 @@ class BaseModel:
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
         return ("[{}] {} {}".format(
-            self.__class__.__name__,str(self.id),str(self.__dict__)))
+            self.__class__.__name__,
+            str(self.id),
+            str(self.__dict__)))
 
     def save(self):
         """this is an instance method to update the update_at
