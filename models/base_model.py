@@ -14,8 +14,8 @@ class BaseModel:
                 if key != "__class__":
                     setattr(self, key, val)
 
-            kwargs.created_at = datetime.fromisoformat(kwargs["created_at"])
-            kwargs.updated_at = datetime.fromisoformat(kwargs["updated_at"])
+            self.created_at = datetime.fromisoformat(kwargs["created_at"])
+            self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
         else:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
