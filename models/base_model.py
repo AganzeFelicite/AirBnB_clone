@@ -17,7 +17,6 @@ class BaseModel:
             self.created_at = datetime.now()  # to store the time
             self.updated_at = datetime.now()
             models.storage.new(self)
-            models.storage.save(self)
         else:
             for key, val in kwargs.items():
                 if key == "__class__":

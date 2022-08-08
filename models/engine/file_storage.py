@@ -35,12 +35,13 @@ class FileStorage:
         ie doing the deserialization
         """
         try:
-            with open(self.__file_path, "r", encoding="utf-8") as f:
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 old_dict = json.load(f)
-
+        
             for dicts in old_dict:
-                xclass = globla()[dicts['__class__']]
+                xclass = globals()[dicts['__class__']]
                 obj = xclass(**dicts)
                 FileStorage.__objects[obj.id] = obj
         except:
             pass
+        
