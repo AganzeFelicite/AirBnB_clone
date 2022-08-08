@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import uuid
+import models
 from datetime import datetime
 '''this is the base module'''
 
@@ -15,6 +16,8 @@ class BaseModel:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
             self.updated_at = datetime.now()
+            models.storage.new(self)
+            models.storage.save(self)
         else:
             for key, val in kwargs.items():
                 if key == "__class__":
@@ -34,6 +37,7 @@ class BaseModel:
     def save(self):
         """this is a method to set the updated_at method"""
         self.updated_at = datetime.now()
+        models.storage.save(self)
 
     def to_dict(self):
         """this a function to print a dictionary containing __dic__"""
