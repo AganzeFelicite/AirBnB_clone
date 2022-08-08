@@ -14,7 +14,7 @@ class BaseModel:
                 if key == "__class__":
                     continue
                 if val in ("created_at", "updated_at"):
-                    self.val = datetime.fromisoformat(val)
+                    val = datetime.fromisoformat(val)
                 setattr(self, key, val)
         else:
             self.id = str(uuid.uuid4())  # to assign a unique id
