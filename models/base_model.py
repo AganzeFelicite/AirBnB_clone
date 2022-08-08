@@ -9,19 +9,20 @@ class BaseModel:
         """
         initialisation of instance attributes
         """
-        if kwargs != {}:
-            for key, val in kwargs.items():
-                if key == "__class__":
-                    continue
-                if key in ("created_at", "updated_at"):
-                    val = datetime.fromisoformat(val)
-                setattr(self, key, val)
-        else:
+        if kwargs == {}:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
             self.updated_at = datetime.now()
+        else:
+            for key, val in kwargs.items():
+                if key == "__class__":
+                    pass                   
+                elif key in ["created_at", "updated_at"]:
+                    self.__dict__[key] = datetime.fromisoformat(val)
+                else:
+                    self.__dict__[key] = val
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''this returns [class name] (id) <all the methods of the class'''
         a = self.__class__.__name__
         b = self.id
