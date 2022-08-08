@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 '''this is the base module'''
 
 
@@ -13,7 +13,7 @@ class BaseModel:
             for key, val in kwargs.items():
                 if key == "__class__":
                     continue
-                if val in ("created_at", "updated_at"):
+                if key in ("created_at", "updated_at"):
                     val = datetime.fromisoformat(val)
                 setattr(self, key, val)
         else:
