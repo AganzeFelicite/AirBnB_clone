@@ -14,12 +14,11 @@ class BaseModel:
                 continue
             if val in ("created_at", "updated_at"):
                 val = datetime.fromisoformat(val)
-
-            setattr(self, key, val)
-        else:
-            self.id = str(uuid.uuid4())  # to assign a unique id
-            self.created_at = datetime.now()  # to store the time
-            self.updated_at = datetime.now()
+                setattr(self, key, val)
+        
+        self.id = str(uuid.uuid4())  # to assign a unique id
+        self.created_at = datetime.now()  # to store the time
+        self.updated_at = datetime.now()
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
