@@ -16,7 +16,7 @@ class BaseModel:
         else:
             for key, val in kwargs.items():
                 if key == "__class__":
-                    pass                   
+                    pass
                 elif key in ["created_at", "updated_at"]:
                     self.__dict__[key] = datetime.fromisoformat(val)
                 else:
