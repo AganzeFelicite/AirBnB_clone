@@ -23,12 +23,13 @@ class BaseModel:
 
     def __str__(self):
         '''this returns [class name] (id) <all the methods of the class'''
-        return f"[{self.__class__.__name__}] {str(self.id)} {str(self.__dict__)}"
+        a = self.__class__.__name__
+        b = self.id
+        c = self.__dict__
+        return f'{[a]} {b} {c}'
 
     def save(self):
-        """this is an instance method to update the update_at
-           attribute every time and date
-        """
+        """this is a method to set the updated_at method"""
         self.updated_at = datetime.now()
 
     def to_dict(self):
