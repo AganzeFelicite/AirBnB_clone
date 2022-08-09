@@ -1,5 +1,13 @@
+#!/usr/bin/env python5
+""""
+this is the base model it creates  the class of 
+Basemodel(): 
+    to create an object
+"""
+
 import uuid
-from datetime import datetime, timezone
+import models
+from datetime import datetime
 '''this is the base module'''
 
 
@@ -9,30 +17,28 @@ class BaseModel:
         """
         initialisation of instance attributes
         """
-        if kwargs != {}:
-            self.created_at = datetime.fromisoformat(kwargs["created_at"])
-            self.updated_at = datetime.fromisoformat(kwargs["updated_at"])
-
-            for key, val in kwargs.items():
-                if key != "__class__":
-                    setattr(self, key, val)
-        else:
+        if not kwargs:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
             self.updated_at = datetime.now()
+            models.storage.new(self)
+            models.storage.save()
+        else:
+            for key, val in kwargs.items():
+                if key in ["created_at", "updated_at"]:
+                    self.__dict__[key] = datetime.fromisoformat(val)
+                elif key != "__class__":
+                    self.__dict__[key] = val
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''this returns [class name] (id) <all the methods of the class'''
-        return ("[{}] {} {}".format(
-            self.__class__.__name__,
-            str(self.id),
-            str(self.__dict__)))
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self):
-        """this is an instance method to update the update_at
-           attribute every time and date
-        """
+        """this is a method to set the updated_at method"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """this a function to print a dictionary containing __dic__"""
