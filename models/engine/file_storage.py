@@ -15,17 +15,17 @@ class FileStorage:
 
     def new(self, obj):
         """this add elements to the dictionary __objects """
-        FileStorage.__objects[obj.id] = obj
+        self.__objects[obj.id] = obj
 
-    def save(self, obj):
+    def save(self):
         """this is saves the object and
         puts it into a file after doing serialisation
         """
-        dicts = []
-        for obj in FileStorage.__objects.values():
-            dicts.append(obj.to_dict())
+        dicts = {}
+        for key in self.__objects:
+            dicts[key] = self.__objects[key].to_dict()
 
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
+        with open(self.__file_path, "w", encoding="utf-8") as file:
             json.dump(dicts, file)
 
     def reload(self):
@@ -35,13 +35,13 @@ class FileStorage:
         ie doing the deserialization
         """
         try:
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
+            with open(self.__file_path, "r", encoding="utf-8") as f:
                 old_dict = json.load(f)
         
-            for dicts in old_dict:
-                xclass = globals()[dicts['__class__']]
-                obj = xclass(**dicts)
-                FileStorage.__objects[obj.id] = obj
+            for key, val in old_dict:
+                xclass = re.findall(r'\w+', key)
+                obj = xclass(**dictss)
+                self.__objects[obj.id] = obj
         except:
-            pass
+            print("not working")
         

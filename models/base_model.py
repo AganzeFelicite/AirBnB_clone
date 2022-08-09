@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+""""
+this is the base model it creates  the class of 
+Basemodel(): 
+    to create an object
+"""
 
 import uuid
 import models
@@ -17,6 +22,7 @@ class BaseModel:
             self.created_at = datetime.now()  # to store the time
             self.updated_at = datetime.now()
             models.storage.new(self)
+            models.storage.save()
         else:
             for key, val in kwargs.items():
                 if key == "__class__":
@@ -28,15 +34,13 @@ class BaseModel:
 
     def __str__(self) -> str:
         '''this returns [class name] (id) <all the methods of the class'''
-        a = self.__class__.__name__
-        b = self.id
-        c = self.__dict__
-        return f'{[a]} {b} {c}'
+        return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
+                                         self.__dict__)
 
     def save(self):
         """this is a method to set the updated_at method"""
         self.updated_at = datetime.now()
-        models.storage.save(self)
+        models.storage.save()
 
     def to_dict(self):
         """this a function to print a dictionary containing __dic__"""
