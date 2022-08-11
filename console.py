@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """this is the console module of the hbnb project"""
-import cmd
+
 import json
-import shlex
-from models import storage
+import cmd
 import sys
-from models.user import User
+import shlex
+from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """this is a console"""
-    classes = {"BaseModel": BaseModel, "User": User}
+    classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = '(hbnb)'
