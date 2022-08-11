@@ -15,7 +15,9 @@ class FileStorage:
 
     def new(self, obj):
         """this add elements to the dictionary __objects """
-        self.__objects[obj.id] = obj
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            self.__objects[key] = obj
 
     def save(self):
         """this is saves the object and
