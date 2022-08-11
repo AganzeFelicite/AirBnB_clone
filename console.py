@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """this is the console module of the hbnb project"""
-
+import re
 import json
 from models import storage
 import cmd
@@ -163,9 +163,65 @@ class HBNBCommand(cmd.Cmd):
             setattr(obj, arg[2], arg[3])
             obj.save()
 
+    def do_count(self, args):
+        """
+        Counts an object passed or all if none is passed
+        """
 
+        all_objs = storage.all()
+        all_objs_list = list()
+        if args:
+            args = shlex.split(args)
+            if args[0] in self.classes:
+                for key in all_objs:
+                    if type(all_objs[key]).__name__ == args[0]:
+                        all_objs_list.append(str(all_objs[key]))
+            else:
+                print("** class doesn't exist **")
+                return
+        else:
+            for key in all_objs:
+                all_objs_list.append(str(all_objs[key]))
+        print(len(all_objs_list))
 
-
+    def default(self, arg):
+        """ handle new ways of inputing data """
+        val_dict = {
+            "all": self.do_all,
+            "create":self.do_create,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+        }
+        arg = arg.strip()
+        values = arg.split(".")
+        if len(values) != 2:
+            cmd.Cmd.default(self, arg)
+            return
+        class_name = values[0]
+        command = values[1].split("(")[0]
+        line = ""
+        if (command == "update" and values[1].split("(")[1][-2] == "}"):
+            inputs = values[1].split("(")[1].split(",", 1)
+            inputs[0] = shlex.split(inputs[0])[0]
+            line = "".join(inputs)[0:-1]
+            line = class_name + " " + line
+            self.do_update2(line.strip())
+            return
+        try:
+            inputs = values[1].split("(")[1].split(",")
+            for num in range(len(inputs)):
+                if (num != len(inputs) - 1):
+                    line = line + " " + shlex.split(inputs[num])[0]
+                else:
+                    line = line + " " + shlex.split(inputs[num][0:-1])[0]
+        except IndexError:
+            inputs = ""
+            line = ""
+        line = class_name + line
+        if (command in val_dict.keys()):
+            val_dict[command](line.strip())
 
     def emptyline(self):
         pass
