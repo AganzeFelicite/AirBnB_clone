@@ -5,11 +5,12 @@ import json
 import shlex
 from models import storage
 import sys
+from models.user import User
 from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """this is a console"""
-    classes = {"BaseModel": BaseModel}
+    classes = {"BaseModel": BaseModel, "User": User}
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = '(hbnb)'

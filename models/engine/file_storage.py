@@ -2,8 +2,9 @@
 """this is the file_storage model"""
 import json
 from models.base_model import BaseModel
+from models.user import User
 
-objts = {"BaseModel": BaseModel}
+objts = {"BaseModel": BaseModel,"User": User}
 class FileStorage:
     """initialization of private class variable"""
     __file_path = "file.json"
