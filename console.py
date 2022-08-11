@@ -2,6 +2,7 @@
 """this is the console module of the hbnb project"""
 
 import json
+from models import storage
 import cmd
 import sys
 import shlex
