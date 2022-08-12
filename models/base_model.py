@@ -20,7 +20,7 @@ class BaseModel:
         if not kwargs:
             self.id = str(uuid.uuid4())  # to assign a unique id
             self.created_at = datetime.now()  # to store the time
-            self.updated_at = datetime.now()
+            self.updated_at = self.created_at
             models.storage.new(self)
             models.storage.save()
         else:
